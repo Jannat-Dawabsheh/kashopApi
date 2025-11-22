@@ -11,6 +11,7 @@ namespace kashop.dal.Data
     public class ApplicationDbContext:DbContext
     {
         public DbSet<Category>Categories { get; set; }
+        public DbSet<CaregoryTranslation> caregoryTranslations { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
       : base(options)
         {

@@ -12,3 +12,4 @@ C:\Users\ashraf\source\repos\api\kashop\kashop.dal\obj\Debug\net9.0\refint\kasho
 C:\Users\ashraf\source\repos\api\kashop\kashop.dal\obj\Debug\net9.0\kashop.dal.pdb
 C:\Users\ashraf\source\repos\api\kashop\kashop.dal\obj\Debug\net9.0\kashop.dal.genruntimeconfig.cache
 C:\Users\ashraf\source\repos\api\kashop\kashop.dal\obj\Debug\net9.0\ref\kashop.dal.dll
+C:\Users\ashraf\source\repos\api\kashop\kashop.dal\obj\Debug\net9.0\kashop.dal.sourcelink.json
