@@ -2,17 +2,21 @@
 using kashop.bll.Service;
 using kashop.dal;
 using kashop.dal.Data;
+using kashop.dal.Models;
 using kashop.dal.Repository;
+using kashop.dal.Utils;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace kashop.pl
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +29,9 @@ namespace kashop.pl
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
             const string defaultCulture = "en";
             var supportedCultures = new[]
             {
@@ -42,6 +49,10 @@ namespace kashop.pl
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddScoped<ISeedData,RoleSeedData>();
+            builder.Services.AddScoped<ISeedData, UserSeedData>();
+
             var app = builder.Build();
             app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
             // Configure the HTTP request pipeline.
@@ -56,6 +67,15 @@ namespace kashop.pl
 
             app.UseAuthorization();
 
+            using (var scope=app.Services.CreateScope()) {
+                var services = scope.ServiceProvider;
+                var seeders=services.GetServices<ISeedData>();
+                foreach (var seeder in seeders)
+                {
+                    await seeder.DataSeed();
+                }
+ 
+            }
 
             app.MapControllers();
 
