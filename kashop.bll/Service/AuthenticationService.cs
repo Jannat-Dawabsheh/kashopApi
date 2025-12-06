@@ -3,9 +3,13 @@ using kashop.dal.DTO.Response;
 using kashop.dal.Models;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,10 +18,12 @@ namespace kashop.bll.Service
     public class AuthenticationService : IAuthenticationService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _configuration;
 
-        public AuthenticationService(UserManager<ApplicationUser>userManager)
+        public AuthenticationService(UserManager<ApplicationUser>userManager,IConfiguration configuration)
         {
             _userManager = userManager;
+            _configuration = configuration;
         }
         
         public async Task<LoginResponse> LoginAsync(LoginRequest loginRequest)
@@ -49,6 +55,7 @@ namespace kashop.bll.Service
                 {
                     Success = true,
                     Message = "login successfully",
+                   AccessToken=await GenerateAccessToken(user)
 
                 };
 
@@ -101,5 +108,28 @@ namespace kashop.bll.Service
                 };
             }
         }
+        public async Task<string>GenerateAccessToken(ApplicationUser user)
+        {
+            var userClaims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier,user.Id),
+                new Claim(ClaimTypes.Name,user.UserName),
+                new Claim(ClaimTypes.Email,user.Email),
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audiennce"],
+                claims: userClaims,
+                expires: DateTime.UtcNow.AddMinutes(5),
+                signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+    
+    
     }
 }

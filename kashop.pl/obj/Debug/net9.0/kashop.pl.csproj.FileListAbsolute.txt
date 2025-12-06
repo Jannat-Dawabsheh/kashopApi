@@ -183,3 +183,4 @@ C:\Users\ashraf\source\repos\api\kashop\kashop.pl\bin\Debug\net9.0\Microsoft.Asp
 C:\Users\ashraf\source\repos\api\kashop\kashop.pl\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\ashraf\source\repos\api\kashop\kashop.pl\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\ashraf\source\repos\api\kashop\kashop.pl\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\ashraf\source\repos\api\kashop\kashop.pl\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
