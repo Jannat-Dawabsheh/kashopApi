@@ -46,5 +46,27 @@ namespace kashop.pl.Areas.Identity
            
             return Ok(result);
         }
+        [HttpPost("SendCode")]
+        public async Task<IActionResult>RequestPasswordReset(ForgotPasswordRequest request)
+        {
+            var result = await _authinticationService.RequestPasswordReset(request);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+
+        [HttpPatch("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        {
+            var result = await _authinticationService.ResetPassword(request);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
     }
 }
