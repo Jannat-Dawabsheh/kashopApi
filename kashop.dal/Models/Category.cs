@@ -9,7 +9,7 @@ namespace kashop.dal.Models
     public class Category: BaseModel
     {
        
-
+        
         public List<CaregoryTranslation> Translations { get; set; }
 
     }
