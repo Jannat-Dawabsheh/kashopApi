@@ -16,7 +16,7 @@ namespace kashop.dal.Data
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         public DbSet<Category>Categories { get; set; }
-        public DbSet<CaregoryTranslation> caregoryTranslations { get; set; }
+        public DbSet<CategoryTranslation> caregoryTranslations { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IHttpContextAccessor httpContextAccessor)
       : base(options)
         {

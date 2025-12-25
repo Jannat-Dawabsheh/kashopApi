@@ -10,7 +10,7 @@ namespace kashop.dal.Models
     {
        
         
-        public List<CaregoryTranslation> Translations { get; set; }
+        public List<CategoryTranslation> Translations { get; set; }
 
     }
 }

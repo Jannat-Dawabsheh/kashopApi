@@ -1,7 +1,7 @@
 [
   {
     "ContainingType": "kashop.pl.Areas.Admin.CategoriesController",
-    "Method": "Create",
+    "Method": "CreateAsync",
     "RelativePath": "api/admin/Categories",
     "HttpMethod": "POST",
     "IsController": true,
@@ -10,6 +10,59 @@
       {
         "Name": "request",
         "Type": "kashop.dal.DTO.Request.CategoryRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "kashop.pl.Areas.Admin.CategoriesController",
+    "Method": "UpdateCategory",
+    "RelativePath": "api/admin/Categories/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "kashop.dal.DTO.Request.CategoryRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "kashop.pl.Areas.Admin.CategoriesController",
+    "Method": "DeleteCategory",
+    "RelativePath": "api/admin/Categories/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "kashop.pl.Areas.Admin.CategoriesController",
+    "Method": "DeleToggleStatusteCategory",
+    "RelativePath": "api/admin/Categories/toggle-status/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -102,7 +155,7 @@
   },
   {
     "ContainingType": "kashop.pl.Areas.User.CategoriesController",
-    "Method": "Index",
+    "Method": "IndexAsync",
     "RelativePath": "api/Categories",
     "HttpMethod": "GET",
     "IsController": true,

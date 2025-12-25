@@ -11,7 +11,7 @@ namespace kashop.dal.DTO.Response
     public class CategoryResponse
     {
         public int Id { get; set; }
-
+        public string userName { get; set; }
 
         public Status Status { get; set; }
         public List<CategoryTranslationResponse> Translations { get; set; }

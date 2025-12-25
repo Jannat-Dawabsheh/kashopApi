@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace kashop.dal.Models
 {
-    public class CaregoryTranslation
+    public class CategoryTranslation
     {
         public int Id { get; set; }
         public string Name { get; set; }
