@@ -1,4 +1,5 @@
 
+using kashop.bll.MapsterConfiguration;
 using kashop.bll.Service;
 using kashop.dal;
 using kashop.dal.Data;
@@ -114,6 +115,7 @@ namespace kashop.pl
             //builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             AppConfiguration.Config(builder.Services);
+            MapsterConfig.MapsterConfigRegister();
             var app = builder.Build();
             app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
             // Configure the HTTP request pipeline.

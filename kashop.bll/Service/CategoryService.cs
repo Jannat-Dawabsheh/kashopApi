@@ -28,11 +28,16 @@ namespace kashop.bll.Service
 
         }
 
-        public async Task<List<CategoryResponse>> GetAllCategoriesAsync()
+        public async Task<List<CategoryResponse>> GetAllCategoriesAsyncForAdmin()
         {
             var categories = await _categoryRepository.GetAllAsync();
-
             var response = categories.Adapt<List<CategoryResponse>>();
+            return response;
+        }
+        public async Task<List<CategoryUserResponse>> GetAllCategoriesAsyncForUser(string lang = "en")
+        {
+            var categories = await _categoryRepository.GetAllAsync();
+            var response=categories.BuildAdapter().AddParameters("lang",lang).AdaptToType< List < CategoryUserResponse >>();
             return response;
         }
 

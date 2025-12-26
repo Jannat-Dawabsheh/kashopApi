@@ -21,8 +21,8 @@ namespace kashop.pl.Areas.User
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> IndexAsync() {
-            var response =await _category.GetAllCategoriesAsync();
+        public async Task<IActionResult> IndexAsync([FromQuery]string lang="en") {
+            var response =await _category.GetAllCategoriesAsyncForUser(lang);
             return Ok(new { message = _localizer["Success"].Value, response });
         }
 
