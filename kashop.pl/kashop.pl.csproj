@@ -19,4 +19,9 @@
     <ProjectReference Include="..\kashop.bll\kashop.bll.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="images\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
 </Project>
