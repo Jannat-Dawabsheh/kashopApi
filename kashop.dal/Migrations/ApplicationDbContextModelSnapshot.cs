@@ -345,6 +345,28 @@ namespace kashop.dal.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("kashop.dal.Models.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
+                });
+
             modelBuilder.Entity("kashop.dal.Models.ProductTranslations", b =>
                 {
                     b.Property<int>("Id")
@@ -467,6 +489,17 @@ namespace kashop.dal.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("kashop.dal.Models.ProductImage", b =>
+                {
+                    b.HasOne("kashop.dal.Models.Product", "Product")
+                        .WithMany("SubImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("kashop.dal.Models.ProductTranslations", b =>
                 {
                     b.HasOne("kashop.dal.Models.Product", "product")
@@ -487,6 +520,8 @@ namespace kashop.dal.Migrations
 
             modelBuilder.Entity("kashop.dal.Models.Product", b =>
                 {
+                    b.Navigation("SubImages");
+
                     b.Navigation("Translations");
                 });
 #pragma warning restore 612, 618

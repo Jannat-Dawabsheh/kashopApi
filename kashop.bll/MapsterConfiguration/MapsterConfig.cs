@@ -15,8 +15,9 @@ namespace kashop.bll.MapsterConfiguration
         {
             TypeAdapterConfig<Category, CategoryResponse>.NewConfig().Map(dest => dest.CreatedBy, source => source.User.UserName);
             TypeAdapterConfig<Category, CategoryUserResponse>.NewConfig().Map(dest => dest.Name, source => source.Translations.Where(t => t.Language == MapContext.Current.Parameters["lang"].ToString()).Select(t => t.Name).FirstOrDefault());
-        
-        
+            TypeAdapterConfig<Product, ProductResponse>.NewConfig().Map(dest => dest.MainImage, source => $"http://localhost:5124/images/{source.MainImage}");
+
+
         }
     }
 }

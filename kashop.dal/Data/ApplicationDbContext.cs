@@ -19,6 +19,7 @@ namespace kashop.dal.Data
         public DbSet<CategoryTranslation> caregoryTranslations { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductTranslations> ProductTranslations { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IHttpContextAccessor httpContextAccessor)
       : base(options)
         {
@@ -39,8 +40,9 @@ namespace kashop.dal.Data
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            var entries = ChangeTracker.Entries<BaseModel>();
+
             if (_httpContextAccessor.HttpContext!=null) {
-                var entries = ChangeTracker.Entries<BaseModel>();
                 var currentUserId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 foreach (var entityEntry in entries)
                 {

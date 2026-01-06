@@ -79,6 +79,57 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "kashop.pl.Areas.Admin.ProductsController",
+    "Method": "IndexAsync",
+    "RelativePath": "api/Admin/Products",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "kashop.pl.Areas.Admin.ProductsController",
+    "Method": "Create",
+    "RelativePath": "api/Admin/Products",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Translations",
+        "Type": "System.Collections.Generic.List\u00601[[kashop.dal.DTO.Request.ProductTranslationRequest, kashop.dal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Price",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "Discount",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "Quantity",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "MainImage",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "CategoryId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "kashop.pl.Areas.Identity.AccountController",
     "Method": "ConfirmEmail",
     "RelativePath": "api/auth/Account/ConfirmEmail",
