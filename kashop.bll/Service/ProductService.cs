@@ -49,5 +49,19 @@ namespace kashop.bll.Service
             await _productRepository.AddAsync(product);
             return product.Adapt<ProductResponse>();
         }
+
+        public async Task<List<ProductUserResponse>> GetAllProductsAsyncForUser(string lang = "en")
+        {
+            var products = await _productRepository.GetAllAsync();
+            var response = products.BuildAdapter().AddParameters("lang", lang).AdaptToType<List<ProductUserResponse>>();
+            return response;
+        }
+
+        public async Task<ProductUserDetails> GetAllProductsDetailsAsyncForUser(int id,string lang = "en")
+        {
+            var product = await _productRepository.FindByIdAsync(id);
+            var response = product.BuildAdapter().AddParameters("lang", lang).AdaptToType<ProductUserDetails>();
+            return response;
+        }
     }
 }
