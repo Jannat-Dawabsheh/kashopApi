@@ -68,5 +68,20 @@ namespace kashop.pl.Areas.Identity
             }
             return Ok(result);
         }
+
+        [HttpPatch("RefreshToken")]
+        public async Task<IActionResult> RefreshToken(TokenApiModel request)
+        {
+            var result = await _authinticationService.RefreshTokenAsync(request);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+
+        }
+
+
+
     }
 }

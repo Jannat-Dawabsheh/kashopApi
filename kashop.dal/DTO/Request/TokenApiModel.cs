@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace kashop.dal.DTO.Response
+namespace kashop.dal.DTO.Request
 {
-    public class LoginResponse: BaseResponse
+    public class TokenApiModel
     {
-       
         public string? AccessToken { get; set; }
         public string? RefreshToken { get; set; }
-}
+    }
 }
