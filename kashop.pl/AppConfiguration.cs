@@ -20,6 +20,8 @@ namespace kashop.pl
             Services.AddScoped<IProductService, ProductService>();
             Services.AddScoped<IProductRepository, ProductRepository>();
             Services.AddScoped<ITokenService, TokenService>();
+            Services.AddScoped<ICartService, CartService>();
+            Services.AddScoped<ICartRepository, CartRepository>();
 
         }
     }
