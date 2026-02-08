@@ -3,6 +3,7 @@ using kashop.dal.DTO.Response;
 using kashop.dal.Models;
 using kashop.dal.Repository;
 using Mapster;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,11 +51,70 @@ namespace kashop.bll.Service
             return product.Adapt<ProductResponse>();
         }
 
-        public async Task<List<ProductUserResponse>> GetAllProductsAsyncForUser(string lang = "en")
+        public async Task<PaginationResponse< ProductUserResponse>> GetAllProductsAsyncForUser(string lang = "en",int page=1,int limit=3
+            ,string? search=null
+            ,int? categoryId=null
+            ,decimal? minPrice=null
+            ,decimal? maxPrice = null
+            ,string? sortBy=null
+            ,bool asc=true
+
+            )
         {
-            var products = await _productRepository.GetAllAsync();
-            var response = products.BuildAdapter().AddParameters("lang", lang).AdaptToType<List<ProductUserResponse>>();
-            return response;
+            var query = _productRepository.Query();
+
+            if(search is not null)
+            {
+                query=query.Where(p=>p.Translations.Any(t=>t.Language== lang && t.Name.Contains(search) || t.Description.Contains(search)));
+            }
+
+            if (categoryId is not null)
+            {
+                query=query.Where(p=>p.CategoryId==categoryId);
+            }
+
+
+            if (minPrice is not null)
+            {
+                query = query.Where(p => p.Price >= minPrice);
+            }
+
+            if (maxPrice is not null)
+            {
+                query = query.Where(p => p.Price <= maxPrice);
+            }
+
+            if (sortBy is not null) { 
+
+               
+                sortBy=sortBy.ToLower();
+                if (sortBy == "price")
+                {
+                    query=asc?query.OrderBy(p=>p.Price):query.OrderByDescending(p=>p.Price);
+                }
+                else if (sortBy == "name")
+                {
+                    query = asc ? query.OrderBy(p => p.Translations.FirstOrDefault(t => t.Language == lang).Name)
+                        : query.OrderByDescending(p => p.Translations.FirstOrDefault(t => t.Language == lang).Name);
+                }
+                else if (sortBy == "rate")
+                {
+                    query = asc ? query.OrderBy(p => p.Rate) : query.OrderByDescending(p => p.Rate);
+                }
+
+            }
+
+            var totalCount = await query.CountAsync();
+            query = query.Skip((page - 1) * limit).Take(limit);
+
+            var response = query.BuildAdapter().AddParameters("lang", lang).AdaptToType<List<ProductUserResponse>>();
+            return new PaginationResponse<ProductUserResponse>
+            {
+                TotalCount = totalCount,
+                Page = page,
+                Limit = limit,
+                Data = response
+            };
         }
 
         public async Task<ProductUserDetails> GetAllProductsDetailsAsyncForUser(int id,string lang = "en")
@@ -62,6 +122,88 @@ namespace kashop.bll.Service
             var product = await _productRepository.FindByIdAsync(id);
             var response = product.BuildAdapter().AddParameters("lang", lang).AdaptToType<ProductUserDetails>();
             return response;
+        }
+
+        //public async Task<BaseResponse> UpdateProductAsync(int id, CategoryRequest request)
+        //{
+        //    try
+        //    {
+        //        var product = await _productRepository.FindByIdAsync(id);
+        //        if (product is null)
+        //        {
+        //            return new BaseResponse
+        //            {
+        //                Success = false,
+        //                Message = "product Not Found"
+        //            };
+        //        }
+        //        if (request.Translations != null)
+        //        {
+        //            foreach (var translation in request.Translations)
+        //            {
+        //                var existing = product.Translations.FirstOrDefault(t => t.Language == translation.Language);
+        //                if (existing is not null)
+        //                {
+        //                    existing.Name = translation.Name;
+        //                }
+        //                else
+        //                {
+        //                    return new BaseResponse
+        //                    {
+        //                        Success = false,
+        //                        Message = $"Language {translation.Language} not supported"
+        //                    };
+        //                }
+        //            }
+        //        }
+        //        await _productRepository.UpdateAsync(product);
+        //        return new BaseResponse
+        //        {
+        //            Success = true,
+        //            Message = "product Updated successfully"
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new BaseResponse
+        //        {
+        //            Success = false,
+        //            Message = "Can't update product",
+        //            Errors = new List<string> { ex.Message }
+        //        };
+        //    }
+        //}
+
+
+        public async Task<BaseResponse> DeleteProductAsync(int id)
+        {
+            try
+            {
+                var product = await _productRepository.FindByIdAsync(id);
+                if (product is null)
+                {
+                    return new BaseResponse
+                    {
+                        Success = false,
+                        Message = "product Not Found"
+                    };
+                }
+                await _productRepository.DeleteAsync(product);
+                return new BaseResponse
+                {
+                    Success = true,
+                    Message = "product Deleted successfully"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    Success = false,
+                    Message = "Can't Delete product",
+                    Errors = new List<string> { ex.Message }
+                };
+            }
         }
     }
 }

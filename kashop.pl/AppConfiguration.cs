@@ -1,6 +1,7 @@
 ﻿using kashop.bll.Service;
 using kashop.dal.Repository;
 using kashop.dal.Utils;
+using kashop.pl.Middleware;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace kashop.pl
@@ -22,6 +23,15 @@ namespace kashop.pl
             Services.AddScoped<ITokenService, TokenService>();
             Services.AddScoped<ICartService, CartService>();
             Services.AddScoped<ICartRepository, CartRepository>();
+            Services.AddScoped<ICheckoutService, CheckoutService>();
+            Services.AddScoped<IOrderRepository, OrderRepository>();
+            Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            Services.AddScoped<IOrderService, OrderService>();
+            Services.AddScoped<IManageUserService, ManageUserService>();
+            Services.AddScoped<IReviewService, ReviewService>();
+            Services.AddScoped<IReviewRepository, ReviewRepository>();
+            Services.AddExceptionHandler<GlobalExceptionHandler>();
+            Services.AddProblemDetails();
 
         }
     }

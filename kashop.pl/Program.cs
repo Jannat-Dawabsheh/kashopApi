@@ -1,4 +1,5 @@
 
+using kashop.bll;
 using kashop.bll.MapsterConfiguration;
 using kashop.bll.Service;
 using kashop.dal;
@@ -6,6 +7,7 @@ using kashop.dal.Data;
 using kashop.dal.Models;
 using kashop.dal.Repository;
 using kashop.dal.Utils;
+using kashop.pl.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +27,16 @@ namespace kashop.pl
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins().AllowAnyMethod().AllowAnyHeader();
+                                  });
+            });
 
             // Add services to the container.
 
@@ -33,7 +46,8 @@ namespace kashop.pl
             builder.Services.AddLocalization(options => options.ResourcesPath = "");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = true;
@@ -126,6 +140,10 @@ namespace kashop.pl
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
+
+            app.UseExceptionHandler();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();

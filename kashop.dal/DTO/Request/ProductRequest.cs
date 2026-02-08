@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using kashop.dal.Validation;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace kashop.dal.DTO.Request
     {
         public List<ProductTranslationRequest> Translations { get; set; }
         public decimal Price { get; set; }
+        [MinValue(3)]
         public decimal Discount { get; set; }
         public int Quantity { get; set; }
         public IFormFile MainImage { get; set; }

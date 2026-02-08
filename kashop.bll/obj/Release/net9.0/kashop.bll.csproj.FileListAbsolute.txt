@@ -1,0 +1,16 @@
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\bin\Release\net9.0\kashop.bll.deps.json
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\bin\Release\net9.0\kashop.bll.dll
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\bin\Release\net9.0\kashop.bll.pdb
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\bin\Release\net9.0\kashop.dal.dll
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\bin\Release\net9.0\kashop.dal.pdb
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\obj\Release\net9.0\kashop.bll.csproj.AssemblyReference.cache
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\obj\Release\net9.0\kashop.bll.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\obj\Release\net9.0\kashop.bll.AssemblyInfoInputs.cache
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\obj\Release\net9.0\kashop.bll.AssemblyInfo.cs
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\obj\Release\net9.0\kashop.bll.csproj.CoreCompileInputs.cache
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\obj\Release\net9.0\kashop.bll.sourcelink.json
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\obj\Release\net9.0\kashop.bll.csproj.Up2Date
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\obj\Release\net9.0\kashop.bll.dll
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\obj\Release\net9.0\refint\kashop.bll.dll
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\obj\Release\net9.0\kashop.bll.pdb
+C:\Users\ashraf\source\repos\api\kashop\kashop.bll\obj\Release\net9.0\ref\kashop.bll.dll

@@ -36,5 +36,20 @@ namespace kashop.pl.Areas.Admin
             var response=await _productServices.CreateProduct(request);
             return Ok(new { message = _localizer["Success"].Value, response });
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct([FromRoute] int id)
+        {
+            var result = await _productServices.DeleteProductAsync(id);
+            if (!result.Success)
+            {
+                if (result.Message.Contains("Not Found"))
+                {
+                    return NotFound(result);
+                }
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
     }
 }

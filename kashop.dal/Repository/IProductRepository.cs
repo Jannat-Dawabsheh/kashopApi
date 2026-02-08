@@ -1,4 +1,5 @@
-﻿using kashop.dal.Models;
+﻿using kashop.dal.DTO.Response;
+using kashop.dal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace kashop.dal.Repository
     {
         Task<Product> AddAsync(Product request);
         Task<List<Product>> GetAllAsync();
+        Task<bool>DecreaseQuantityAsync(List<(int productId, int quantity)> items);
         Task<Product?> FindByIdAsync(int id);
+        IQueryable<Product> Query();
+        Task DeleteAsync(Product product);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kashop.dal.DTO.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,6 @@ namespace kashop.dal.Models
         public Category Category { get; set; }
         public List<ProductTranslations> Translations {  get; set; }
         public List<ProductImage> SubImages {  get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }

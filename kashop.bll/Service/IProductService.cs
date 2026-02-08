@@ -10,10 +10,18 @@ namespace kashop.bll.Service
 {
     public interface IProductService
     {
-        public Task<ProductResponse> CreateProduct(ProductRequest request);
-        public Task<List<ProductResponse>> GetAllProductsAsyncForAdmin();
-        public Task<List<ProductUserResponse>> GetAllProductsAsyncForUser(string lang = "en");
-        public Task<ProductUserDetails> GetAllProductsDetailsAsyncForUser(int id, string lang = "en");
+         Task<ProductResponse> CreateProduct(ProductRequest request);
+         Task<List<ProductResponse>> GetAllProductsAsyncForAdmin();
+        Task<PaginationResponse<ProductUserResponse>> GetAllProductsAsyncForUser(string lang = "en", int page = 1, int limit = 3
+           , string? search = null
+           , int? categoryId = null
+           , decimal? minPrice = null
+           , decimal? maxPrice = null
+           , string? sortBy = null
+           , bool asc = true
 
+           );
+         Task<ProductUserDetails> GetAllProductsDetailsAsyncForUser(int id, string lang = "en");
+         Task<BaseResponse> DeleteProductAsync(int id);
     } 
 }

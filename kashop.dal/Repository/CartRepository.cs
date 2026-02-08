@@ -50,6 +50,14 @@ namespace kashop.dal.Repository
 
         }
 
+        public async Task DeleteAsync(Cart cart)
+        {
+            _context.Carts.Remove(cart);
+            await _context.SaveChangesAsync();
+           
+
+        }
+
         public async Task ClearCartAsync(string userId)
         {
             var items=await _context.Carts.Where(c=>c.UserId==userId).ToListAsync();
