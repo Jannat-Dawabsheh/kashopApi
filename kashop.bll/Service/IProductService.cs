@@ -22,6 +22,7 @@ namespace kashop.bll.Service
 
            );
          Task<ProductUserDetails> GetAllProductsDetailsAsyncForUser(int id, string lang = "en");
+        Task<BaseResponse> UpdateProductAsync(int id, UpdateProductRequest request);
          Task<BaseResponse> DeleteProductAsync(int id);
     } 
 }

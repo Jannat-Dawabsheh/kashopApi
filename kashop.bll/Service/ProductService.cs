@@ -124,55 +124,92 @@ namespace kashop.bll.Service
             return response;
         }
 
-        //public async Task<BaseResponse> UpdateProductAsync(int id, CategoryRequest request)
-        //{
-        //    try
-        //    {
-        //        var product = await _productRepository.FindByIdAsync(id);
-        //        if (product is null)
-        //        {
-        //            return new BaseResponse
-        //            {
-        //                Success = false,
-        //                Message = "product Not Found"
-        //            };
-        //        }
-        //        if (request.Translations != null)
-        //        {
-        //            foreach (var translation in request.Translations)
-        //            {
-        //                var existing = product.Translations.FirstOrDefault(t => t.Language == translation.Language);
-        //                if (existing is not null)
-        //                {
-        //                    existing.Name = translation.Name;
-        //                }
-        //                else
-        //                {
-        //                    return new BaseResponse
-        //                    {
-        //                        Success = false,
-        //                        Message = $"Language {translation.Language} not supported"
-        //                    };
-        //                }
-        //            }
-        //        }
-        //        await _productRepository.UpdateAsync(product);
-        //        return new BaseResponse
-        //        {
-        //            Success = true,
-        //            Message = "product Updated successfully"
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new BaseResponse
-        //        {
-        //            Success = false,
-        //            Message = "Can't update product",
-        //            Errors = new List<string> { ex.Message }
-        //        };
-        //    }
-        //}
+        public async Task<BaseResponse> UpdateProductAsync(int id, UpdateProductRequest request)
+        {
+            try
+            {
+                var product = await _productRepository.FindByIdAsync(id);
+                if (product is null)
+                {
+                    return new BaseResponse
+                    {
+                        Success = false,
+                        Message = "product Not Found"
+                    };
+                }
+                if (request.Translations != null)
+                {
+                    foreach (var translation in request.Translations)
+                    {
+                        var existing = product.Translations.FirstOrDefault(t => t.Language == translation.Language);
+                        if (existing is not null)
+                        {
+                            existing.Name = translation.Name;
+                            existing.Description = translation.Description!=null? translation.Description:existing.Description;
+                        }
+                        else
+                        {
+                            return new BaseResponse
+                            {
+                                Success = false,
+                                Message = $"Language {translation.Language} not supported"
+                            };
+                        }
+                    }
+                }
+                //product.Price = request.Price != null?(decimal)request.Price:product.Price;
+                //product.Quantity = request.Quantity != null ? (int)request.Quantity : product.Quantity;
+                //product.Discount = request.Discount != null ? (decimal)request.Discount : product.Discount;
+
+
+            
+                if (request.MainImage != null)
+                {
+                    var imagePath = await _fileServices.UploadAsync(request.MainImage);
+                    product.MainImage = imagePath;
+                }
+                if (request.SubImages != null)
+                {
+                    product.SubImages = new List<ProductImage>();
+                    foreach (var file in request.SubImages)
+                    {
+                        var imagePath = await _fileServices.UploadAsync(file);
+                        product.SubImages.Add(new ProductImage { ImageName = imagePath });
+                    }
+                }
+
+                if (request.Price != null)
+                {
+                    product.Price = (decimal)request.Price;
+                }
+
+                if (request.Quantity != null)
+                {
+                    product.Quantity = (int)request.Quantity;
+                }
+
+                if (request.Discount != null)
+                {
+                    product.Discount = (decimal)request.Discount;
+                }
+
+                await _productRepository.UpdateAsync(product);
+                return new BaseResponse
+                {
+                    Success = true,
+                    Message = "product Updated successfully"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    Success = false,
+                    Message = "Can't update product",
+                    Errors = new List<string> { ex.Message }
+                };
+            }
+        }
 
 
         public async Task<BaseResponse> DeleteProductAsync(int id)
